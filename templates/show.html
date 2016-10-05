@@ -1,0 +1,48 @@
+{{template "header" .}}
+<title>{{.WebSiteTitle}}</title>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">{{template "navbar" .}}</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+
+				<th>班级</th>
+				<th>姓名</th>
+				<th>博客地址</th>
+				<th>打开博客（如果不能打开，请复制地址到地址栏）</th>
+
+			</tr>
+		</thead>
+		{{range .AllInfo}}
+		<tbody>
+			<tr>
+				<th>{{.Info2}}</th>
+				<th>{{.Info3}}</th>
+				<th>{{.Info4}}</th>
+				<th>
+					<a href="{{.Info4}}" >点击这里</a>
+				</th>
+			</tr>
+		</tbody>
+		{{end}}
+	</table>
+</div>
+{{template "footer" .}}
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/3.0.0-alpha1/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+<!-- 
+<script type="text/javascript" src=""></script>
+-->
+</body>
+</html>

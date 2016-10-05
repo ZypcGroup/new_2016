@@ -1,0 +1,19 @@
+{{define "navbar"}}
+<div class="container">
+    <a class="navbar-brand" href={{.WebSiteLink}}>{{.WebSiteHome}}</a>
+    <ul class="nav navbar-nav">
+        <li {{if .IsHome}}class="active"{{end}} ><a href="/">{{.WebSiteTitle}}</a> </li>
+        <li {{if .IsInfo}}class="active"{{end}} ><a href="/show">提交信息查看</a> </li>
+    
+    </ul>
+
+
+    <ul class="nav navbar-nav navbar-right">
+        {{if .IsLogin}}
+        <li><a href="/login?exit=true">退出</a></li>
+        {{else}}
+        <li><a href="/login">管理员登录</a></li>
+        {{end}}
+    </ul>
+</div>
+{{end}}
