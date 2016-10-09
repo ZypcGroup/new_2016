@@ -2,14 +2,15 @@ package controller
 
 import (
 	"fmt"
+
 	"github.com/Unknwon/goconfig"
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
 	// "log"
-	// "github.com/go-macaron/session"
+	"github.com/go-macaron/session"
 	// "macaron/controller"
 	// "zypc_submit/models"
-	"time"
+	//	"time"
 )
 
 var conf *goconfig.ConfigFile
@@ -54,29 +55,13 @@ func init() {
 	}
 }
 
-func Homehandler(ctx *macaron.Context) {
-
-	sess, _ := Sess.Start(ctx)
-
-	createtime := sess.Get("CreateTime")
-	// fmt.Println(createtime, "\n-------------\n")
-	if createtime == nil {
-		// fmt.Println(createtime, "\n-------------\n")
-		ctx.Redirect("/login", 301)
-	} else if (createtime.(int64) + 360) > time.Now().Unix() {
-		// fmt.Println(createtime, "\n-------------\n")
-
+func Homehandler(ctx *macaron.Context, sess session.Store) {
+	fmt.Println(sess.Get("status"))
+	if fmt.Sprintf("%v", sess.Get("status")) == "true" {
 		ctx.Data["IsLogin"] = true
 	} else {
 		ctx.Redirect("/login", 301)
 	}
-
-	exit := ctx.Req.FormValue("exit")
-
-	if exit == "true" {
-		sess.Delete(createtime)
-	}
-
 	ctx.Data["WebSiteTitle"] = websitetitle
 	ctx.Data["WebSiteHome"] = websitehome
 	ctx.Data["WebSiteLink"] = websitelink

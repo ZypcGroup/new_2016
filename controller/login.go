@@ -9,29 +9,33 @@ import (
 	"github.com/go-macaron/session"
 	// "macaron/controller"
 	// "encoding/base64"
+	"new_2016/models"
 	"strconv"
 	"time"
-	"zypc_submit/models"
 )
-
-var Sess *session.Manager
 
 var Debug bool = false
 
-func init() {
-	// Sess = new(session.Manager)
-	Sess, _ = session.NewManager("memory", session.Options{Provider: "memory"})
-	// fmt.Println(Sess)
-}
+//var user *models.User
 
-func Loginhandler(ctx *macaron.Context) {
+const cookieName = "ZypcCookie"
+
+func Loginhandler(ctx *macaron.Context, sess session.Store) {
+	exit := ctx.Req.FormValue("exit")
+	fmt.Println(exit, "*********************")
+	if exit == "true" {
+		err := sess.Destory(ctx)
+		fmt.Println(err, sess.Count())
+		//		sess.GC()
+		//		ctx.Redirect("/login", 301)
+	}
 	ctx.Data["WebSiteIcon"] = websiteicon
 	ctx.HTML(200, "login_demo")
 
 }
 
-func LoginJudgehandler(ctx *macaron.Context) (err error) {
-	var user = new(models.User)
+func LoginJudgehandler(ctx *macaron.Context, sess session.Store) (err error) {
+	user = new(models.User)
 
 	usernameinfo := ctx.Req.FormValue("userinfo")
 	if usernameinfo[1] >= '0' && usernameinfo[1] <= '9' {
@@ -48,23 +52,11 @@ func LoginJudgehandler(ctx *macaron.Context) (err error) {
 	}
 
 	if ok, _ := models.JudgeUser(user); ok {
+		//		ctx.SetCookie(cookieName, sess.ID())
 
-		sess, _ := Sess.Start(ctx)
-
-		createtime := sess.Get("CreateTime")
-		if createtime == nil {
-			sess.Set("CreateTime", time.Now().Unix())
-			sess.Set("UserID", user.UserId)
-			// sess.Set("Countnum", 1)
-			ctx.Redirect("/", 301)
-		} else if (createtime.(int64) + 360) > time.Now().Unix() {
-			// fmt.Println(createtime, "\n-------------\n")
-
-			ctx.Data["IsLogin"] = true
-			ctx.Redirect("/", 301)
-		} else {
-			ctx.Redirect("/login", 301)
-		}
+		sess.Set("userid", user.UserId)
+		sess.Set("status", "true")
+		ctx.Redirect("/", 301)
 
 	} else {
 		ErrorInfo = "用户名错误或者密码错误！"
@@ -112,40 +104,4 @@ func NoUser(userid int64) bool {
 	has, _ := models.CheckUser(userid)
 
 	return has
-}
-
-func Testhandler(ctx *macaron.Context, f *session.Flash) {
-	// sess.Set("session", "axiu session")
-	// sessid, _ := Sess.RegenerateId(ctx)
-	// fmt.Println(sessid.ID())
-
-	sess, _ := Sess.Start(ctx)
-
-	ct := sess.Get("Count")
-	if ct == nil {
-		sess.Set("Count", 1)
-	} else {
-		sess.Set("Count", (ct.(int) + 1))
-	}
-
-	// sessid := sess.Get("MacaronSession")
-
-	// fmt.Println(ct, sessid)
-
-	ctx.Data["Count"] = ct
-	f.Success("yes!!!")
-	f.Error("opps...")
-	f.Info("aha?!")
-	f.Warning("Just be careful.")
-	ctx.HTML(200, "test")
-}
-
-func Test2handler(ctx *macaron.Context, f *session.Flash) {
-	sess, _ := Sess.Start(ctx)
-	// sess.Set("Count", 1)
-	ct := sess.Get("Count")
-	// fmt.Println(ct)
-	ctx.Data["Count"] = ct
-	ctx.HTML(200, "test")
-
 }

@@ -2,10 +2,11 @@ package models
 
 import (
 	"fmt"
+	"new_2016/modules"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	"time"
-	"zypc_submit/modules"
 )
 
 const (
@@ -29,13 +30,16 @@ var (
 var engine *xorm.Engine
 
 type User struct {
-	UserId    int64 `xorm:"index"`
-	UserName  string
-	Password  string
-	Time      time.Time `xorm:"index"`
-	Email     string
-	Telnumber string
-	Flag      int
+	UserId     int64 `xorm:"index"`
+	UserName   string
+	Password   string
+	Grade      string
+	Choose     string
+	Department string
+	Email      string
+	Telnumber  string
+	Time       time.Time `xorm:"index"`
+	Flag       int
 }
 
 type Topic struct {

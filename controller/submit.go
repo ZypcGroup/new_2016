@@ -1,25 +1,31 @@
 package controller
 
 import (
-	// "fmt"
+	"fmt"
 	// "github.com/Unknwon/goconfig"
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
 	// "log"
-	// "github.com/go-macaron/session"
+	"github.com/go-macaron/session"
 	// "macaron/controller"
-	// "strconv"
-	"zypc_submit/models"
+	"new_2016/models"
+	"strconv"
 )
 
-func Submithandler(ctx *macaron.Context) {
+func Submithandler(ctx *macaron.Context, sess session.Store) {
 
-	sess, _ := Sess.Start(ctx)
-	userid := sess.Get("UserID")
+	if fmt.Sprintln(sess.Get("status")) == "true" {
+
+		ctx.Data["IsLogin"] = true
+
+	} else {
+		ctx.Redirect("/login", 301)
+	}
+
 	// fmt.Println(userid)
 	info := new(models.Infomation)
-	// info.UserId, _ = strconv.ParseInt(string(userid), 10, 64)
-	info.UserId = userid.(int64)
+	info.UserId, _ = strconv.ParseInt(fmt.Sprintln(sess.Get("userid")), 10, 64)
+	//	info.UserId =
 	info.Info1 = ctx.Req.FormValue("Info1")
 	info.Info2 = ctx.Req.FormValue("Info2")
 	info.Info3 = ctx.Req.FormValue("Info3")

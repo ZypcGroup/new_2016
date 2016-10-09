@@ -1,30 +1,26 @@
 package controller
 
 import (
+	"new_2016/models"
+	//	"time"
+
+	"fmt"
+
+	"github.com/go-macaron/session"
 	"gopkg.in/macaron.v1"
-	"time"
-	"zypc_submit/models"
 )
 
-func Showhandler(ctx *macaron.Context) {
-	sess, _ := Sess.Start(ctx)
-
-	createtime := sess.Get("CreateTime")
-	// fmt.Println(createtime, "\n-------------\n")
-	if createtime == nil {
-		// fmt.Println(createtime, "\n-------------\n")
-		ctx.Redirect("/login", 301)
-	} else if (createtime.(int64) + 360) > time.Now().Unix() {
-		// fmt.Println(createtime, "\n-------------\n")
-
+func Showhandler(ctx *macaron.Context, sess session.Store) {
+	if fmt.Sprintf("%v", sess.Get("status")) == "true" {
 		ctx.Data["IsLogin"] = true
-		// ctx.Redirect("/show", 301)
-	}
 
+	}
 	exit := ctx.Req.FormValue("exit")
 
 	if exit == "true" {
-		sess.Delete(createtime)
+		sess.Destory(ctx)
+		sess.GC()
+
 	}
 
 	ctx.Data["WebSiteTitle"] = websitetitle
