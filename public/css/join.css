@@ -1,0 +1,28 @@
+.container{
+  margin:10% 19%;
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 4px 4px #cccccc;
+}
+.form-group{
+}
+.form-control{
+  width: 100%;
+}
+.btn-primary{
+  margin-left: 35%;
+  border-radius: 15px;
+}
+.tips{
+  color: black;
+}
+.progress-bar-striped{
+  background: green;
+}
+.progress-bar-danger{
+  background: green;
+}
+.finally{
+  background: red;
+}

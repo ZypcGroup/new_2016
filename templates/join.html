@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智邮普创</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/join.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+  <h4>智邮普创报名通道</h4>
+ <form class="form-group" id="infor" method="post" action="http://222.24.24.35:8080/infosub">
+     <div class="form-group">
+        <label>姓名</label>
+        <input type="text" class="form-control" placeholder="Name" name="name" id="name">
+     </div>
+  <div class="form-group">
+        <label>学号</label>
+        <input type="text" class="form-control" placeholder="Number" name="number" maxlength="8">
+  </div>
+  <div class="form-group">
+        <label>院系</label>
+        <input type="text" class="form-control" placeholder="Departments" name="Departments" id="Departmebts">
+  </div>
+  <div class="form-group">
+        <label>年级</label>
+        <select class="form-control" name="grade" id="choose_grade">
+            <option>大一</option>
+            <option>大二</option>
+            <option>大三</option>
+        </select>
+  </div>
+  <div class="form-group">
+        <label>预期方向</label>
+        <select class="form-control" name="choose" id="choose_turn">
+            <option>运维</option>
+            <option>前端</option>
+            <option>网络安全</option>
+            <option>数据挖掘</option>
+        </select>
+  </div>
+  <div class="form-group">
+        <label>联系电话</label>
+        <input type="text" class="form-control" placeholder="phone" name="phone" id="phone" maxlength="11">
+  </div>
+  <div class="form-group">
+		<label>验证码</label>
+		<input id="captcha" name="captcha">
+		<br>
+        {{.Captcha.CreateHtml}}
+         <button type="submit" class="btn btn-primary" id="btn">提交</button>
+         <br>
+    </form>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $.ajax({
+        url:'',//后台返回状态码
+        type:'GET',
+        success:function(data){
+          switch(data.type){
+            case 0:alert('报名失败！请重新填写个人信息。');break;
+            case 1:{
+                  alert('请等待面试时间短信通知！');
+                  location.reload();
+                  break;
+            }
+          }
+        }
+      })
+  });
+</script>
+</body>
+</html>

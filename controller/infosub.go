@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/go-macaron/captcha"
 	"gopkg.in/macaron.v1"
 )
 
@@ -26,7 +27,11 @@ var user *models.User
 
 //var user *User
 
-func InfoSubHandler(ctx *macaron.Context) string {
+func InfoSubHandler(ctx *macaron.Context, cpt *captcha.Captcha) string {
+	if !cpt.VerifyReq(ctx.Req) {
+		ErrorInfo = "验证码错误！"
+		ctx.Redirect("/errorinfo", 301)
+	}
 	user = new(models.User)
 	//	user = new(User)
 	user.UserName = ctx.Req.FormValue("name")
@@ -44,10 +49,18 @@ func InfoSubHandler(ctx *macaron.Context) string {
 	}
 	user.UserId = t
 
-	err = models.AddUser(user)
+	ok, err := models.CheckUser(user.UserId)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return "Add OK"
+	if !ok {
+		err = models.AddUser(user)
+		if err != nil {
+			fmt.Println(err)
+		}
+		return "Add OK"
+	}
+
+	return "Add Error (Exist or not have this user.)"
 
 }

@@ -10,6 +10,8 @@ import (
 	"new_2016/controller"
 	"new_2016/models"
 
+	"github.com/go-macaron/cache"
+	"github.com/go-macaron/captcha"
 	"github.com/go-macaron/session"
 	// "macaron/modules/initConf"
 	// "encoding/base64"
@@ -54,16 +56,10 @@ func main() {
 		// 用于存放会话 ID 的 Cookie 名称，默认为 "MacaronSession"
 		CookieName: cookieName,
 	}))
+	m.Use(cache.Cacher())
+	m.Use(captcha.Captchaer())
 	m.Get("/", controller.Homehandler)
-	m.Post("/submit", controller.Submithandler)
-	m.Get("/login", controller.Loginhandler)
-	m.Post("/login", controller.LoginJudgehandler)
-	m.Post("/register", controller.Registerhandler)
 	m.Get("/errorinfo", controller.ErrorInfohandler)
-	// m.Get("/test", controller.Testhandler)
-
-	m.Get("/ok", controller.Okhandler)
-	m.Get("/show", controller.Showhandler)
 
 	m.Post("/infosub", controller.InfoSubHandler)
 

@@ -29,6 +29,21 @@ var (
 
 var engine *xorm.Engine
 
+type YdStudent struct {
+	No     string `xorm:"index"`
+	Sno    string
+	Name   string
+	Sex    string
+	Xy     string
+	Zy     string
+	Nj     string
+	Bj     string
+	Sflx   string
+	Cardid string
+	T      string
+	Netid  string
+}
+
 type User struct {
 	UserId     int64 `xorm:"index"`
 	UserName   string

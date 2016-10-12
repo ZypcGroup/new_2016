@@ -7,10 +7,10 @@ import (
 	// "github.com/go-macaron/gzip"
 	"gopkg.in/macaron.v1"
 	// "log"
-	"github.com/go-macaron/session"
+	// "github.com/go-macaron/session"
 	// "macaron/controller"
 	// "zypc_submit/models"
-	//	"time"
+	//	"github.com/go-macaron/captcha"
 )
 
 var conf *goconfig.ConfigFile
@@ -47,32 +47,14 @@ func init() {
 	if ok, err := conf.GetValue("AppInfo", "WebSiteIcon"); err == nil {
 		websiteicon = ok
 	}
-	// Debug info
-	if ok, err := conf.GetValue("Server", "Debug"); err == nil {
-		if ok == "true" {
-			Debug = true
-		}
-	}
 }
 
-func Homehandler(ctx *macaron.Context, sess session.Store) {
-	fmt.Println(sess.Get("status"))
-	if fmt.Sprintf("%v", sess.Get("status")) == "true" {
-		ctx.Data["IsLogin"] = true
-	} else {
-		ctx.Redirect("/login", 301)
-	}
+func Homehandler(ctx *macaron.Context) {
+
 	ctx.Data["WebSiteTitle"] = websitetitle
 	ctx.Data["WebSiteHome"] = websitehome
 	ctx.Data["WebSiteLink"] = websitelink
 	ctx.Data["WebSiteIcon"] = websiteicon
 	ctx.Data["IsHome"] = true
-
-	ctx.Data["Info1"] = "学号"
-	ctx.Data["Info2"] = "班级"
-	ctx.Data["Info3"] = "姓名"
-	ctx.Data["Info4"] = "博客地址"
-	ctx.Data["Info5"] = "备注"
-
-	ctx.HTML(200, "home")
+	ctx.HTML(200, "join")
 }
