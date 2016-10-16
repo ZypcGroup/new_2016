@@ -18,7 +18,7 @@
 <body>
 <div class="container">
   <h4>智邮普创报名通道</h4>
- <form class="form-group" id="infor" method="post" action="http://222.24.24.35:8080/infosub">
+ <form class="form-group" id="infor" method="post" action="/infosub">
      <div class="form-group">
         <label>姓名</label>
         <input type="text" class="form-control" placeholder="Name" name="name" id="name">
@@ -53,35 +53,18 @@
         <input type="text" class="form-control" placeholder="phone" name="phone" id="phone" maxlength="11">
   </div>
   <div class="form-group">
-		<label>验证码</label>
-		<input id="captcha" name="captcha">
-		<br>
-        {{.Captcha.CreateHtml}}
-         <button type="submit" class="btn btn-primary" id="btn">提交</button>
+         <label>验证码</label>
+         <input id="captcha" name="captcha" type="text" class="form-control">
          <br>
+         {{.Captcha.CreateHtml}}
+  </div>
+
+         <button type="submit" class="btn btn-primary" id="btn">提交</button>
     </form>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-  $(document).ready(function(){
-      $.ajax({
-        url:'',//后台返回状态码
-        type:'GET',
-        success:function(data){
-          switch(data.type){
-            case 0:alert('报名失败！请重新填写个人信息。');break;
-            case 1:{
-                  alert('请等待面试时间短信通知！');
-                  location.reload();
-                  break;
-            }
-          }
-        }
-      })
-  });
-</script>
 </body>
 </html>

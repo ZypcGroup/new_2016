@@ -62,6 +62,5 @@ func main() {
 	m.Get("/errorinfo", controller.ErrorInfohandler)
 
 	m.Post("/infosub", controller.InfoSubHandler)
-
 	m.Run(port)
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智邮普创</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+        <div class="tips" style="width:320px;height:600px;margin:10% auto;">
+        <img src="tips.jpg" width="160px" height="160px" style="margin:14% 25%;"/>
+        <p style="font-weight:bold;font-size:25px;text-align:center;margin-left:2%;">提交发生系统错误</p >
+        <p style="font-size:28px;text-align:center;margin-left:8%;" class="tip-1">
+        请重新填写面试信息。</p>
+        <button id="return" class="btn btn-primary" style="border-radius: 10px;margin:15% 40%;">返回</button>
+        </div>
+  </div>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+       $('#return').click(function(event){
+         event.preventDefault();
+         window.location.href="/";
+       })
+    })
+  </script>
+</body>
+</html>

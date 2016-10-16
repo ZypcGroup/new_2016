@@ -27,7 +27,7 @@ var user *models.User
 
 //var user *User
 
-func InfoSubHandler(ctx *macaron.Context, cpt *captcha.Captcha) string {
+func InfoSubHandler(ctx *macaron.Context, cpt *captcha.Captcha)  {
 	if !cpt.VerifyReq(ctx.Req) {
 		ErrorInfo = "验证码错误！"
 		ctx.Redirect("/errorinfo", 301)
@@ -58,9 +58,9 @@ func InfoSubHandler(ctx *macaron.Context, cpt *captcha.Captcha) string {
 		if err != nil {
 			fmt.Println(err)
 		}
-		return "Add OK"
+		ctx.HTML(200,"success")
 	}
 
-	return "Add Error (Exist or not have this user.)"
+	ctx.HTML(200,"return")
 
 }
